@@ -4,7 +4,41 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form method="post">
+    <div>
+        <button asp-page-handler="block" class="headear_buttons">
+            <img src="assets/lock-closed-svgrepo-com.svg" />
+        </button>
+        <button asp-page-handler="unblock" class="headear_buttons">
+            <img src="assets/lock-open-svgrepo-com.svg" />
+        </button>
+        <button asp-page-handler="delete" class="headear_buttons">
+            <img src="assets/block-2-svgrepo-com.svg" />
+        </button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Last login</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td><input name="AreChecked" type="checkbox" value="@user.UserId" /></td>
+                    <td>@user.UserId</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.LastLoginDateTime</td>
+                    <td>@user.UserStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

@@ -1,20 +1,65 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SimpleUserManager.DTOs;
+using SimpleUserManager.Services;
+using System.Security.Claims;
 
-namespace SimpleUserManager.Pages
+namespace SimpleUserManager.Pages;
+
+[Authorize]
+public class IndexModel(IUserService userService) : PageModel
 {
-    public class IndexModel : PageModel
+    [BindProperty]
+    public List<int> AreChecked { get; set; } = new List<int>();
+    public IEnumerable<UserManipulationDto> Users { get; } = userService.GetAll();
+    public void OnGet()
     {
-        private readonly ILogger<IndexModel> _logger;
+    }
+    public async Task<IActionResult> OnGetLogoutAsync()
+    {
+        await HttpContext.SignOutAsync();
 
-        public IndexModel(ILogger<IndexModel> logger)
+        return RedirectToPage("Login");
+    }
+
+    public async Task<IActionResult> OnPostBlockAsync() 
+    {
+        await userService.BlockAsync(AreChecked);
+
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostUnblockAsync()
+    {
+        await LogoutIfPicked();
+        await userService.UnblockAsync(AreChecked);
+
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostDeleteAsync()
+    {
+        await LogoutIfPicked();
+        await userService.DeleteAsync(AreChecked);
+
+        return RedirectToPage();
+    }
+
+    private async Task LogoutIfPicked()
+    {
+        if (AreChecked.Contains(GetUserIdFromClaims()))
         {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
+            await HttpContext.SignOutAsync();
         }
     }
+
+    private int GetUserIdFromClaims()
+    {
+        var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        return Convert.ToInt32(userId);
+    }
+
 }
