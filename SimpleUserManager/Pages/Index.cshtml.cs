@@ -33,7 +33,6 @@ public class IndexModel(IUserService userService) : PageModel
 
     public async Task<IActionResult> OnPostUnblockAsync()
     {
-        await LogoutIfPicked();
         await userService.UnblockAsync(AreChecked);
 
         return RedirectToPage();

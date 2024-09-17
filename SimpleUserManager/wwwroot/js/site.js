@@ -1,4 +1,6 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿document.querySelector('.table__checkbox').addEventListener('change', function () {
+    const checkboxes = document.querySelectorAll('.checkbox__selected-user');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = this.checked;
+    }.bind(this));
+});

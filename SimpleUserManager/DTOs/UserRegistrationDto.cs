@@ -5,7 +5,7 @@ namespace SimpleUserManager.DTOs;
 public class UserRegistrationDto
 {
     [Required]
-    [StringLength(30, MinimumLength = 3)]
+    [StringLength(30, ErrorMessage = "Username must be 3-30 characters", MinimumLength = 3)]
     public string? UserName { get; set; }
     [Required]
     [EmailAddress]

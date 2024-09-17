@@ -36,7 +36,7 @@ public static class ServiceExtensions
             {
                 options.Cookie.Name = "TastyCookie";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-                options.LoginPath = "/Register";
+                options.LoginPath = "/Login";
             });
     }
 

@@ -19,11 +19,12 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th></th>
+                <th><input class="table__checkbox" type="checkbox" /></th>
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Last login</th>
+                <th scope="col">Register Date</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
@@ -31,11 +32,12 @@
             @foreach (var user in Model.Users)
             {
                 <tr>
-                    <td><input name="AreChecked" type="checkbox" value="@user.UserId" /></td>
+                    <td><input class="checkbox__selected-user" name="AreChecked" type="checkbox" value="@user.UserId" /></td>
                     <td>@user.UserId</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
                     <td>@user.LastLoginDateTime</td>
+                    <td>@user.RegistrationDateTime</td>
                     <td>@user.UserStatus</td>
                 </tr>
             }
