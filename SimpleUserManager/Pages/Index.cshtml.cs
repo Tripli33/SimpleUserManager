@@ -26,6 +26,7 @@ public class IndexModel(IUserService userService) : PageModel
 
     public async Task<IActionResult> OnPostBlockAsync() 
     {
+        await LogoutIfPicked();
         await userService.BlockAsync(AreChecked);
 
         return RedirectToPage();
