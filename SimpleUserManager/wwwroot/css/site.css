@@ -24,3 +24,8 @@ body {
 .headear_buttons:hover {
     background-color:red;
 }
+
+.validation-message {
+    min-height: 23px;
+    display: block;
+}
