@@ -15,12 +15,11 @@ public static class ServiceExtensions
     {
         ArgumentException.ThrowIfNullOrEmpty(connectionStringName);
 
-        var configuration = serviceCollection.BuildServiceProvider().GetService<IConfiguration>();
-        var connectionString = configuration!.GetConnectionString(connectionStringName);
+        var connectionString = Environment.GetEnvironmentVariable(connectionStringName);
 
         serviceCollection.AddDbContext<UserManagerDbContext>(options =>
         {
-            options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 36)));
+            options.UseNpgsql(connectionString);
         });
     }
 
