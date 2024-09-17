@@ -31,7 +31,7 @@ public class AuthService(IUserRepository userRepository,
             throw new InvalidPasswordException();
         }
 
-        user.LastLoginDateTime = DateTime.Now;
+        user.LastLoginDateTime = DateTime.UtcNow;
         await userRepository.UpdateAsync(user);
 
         return user;
@@ -43,8 +43,8 @@ public class AuthService(IUserRepository userRepository,
 
         var user = mapper.Map<User>(userDto);
 
-        user.RegistrationDateTime = DateTime.Now;
-        user.LastLoginDateTime = DateTime.Now;
+        user.RegistrationDateTime = DateTime.UtcNow;
+        user.LastLoginDateTime = DateTime.UtcNow;
         await userRepository.CreateAsync(user);
 
         return user;
